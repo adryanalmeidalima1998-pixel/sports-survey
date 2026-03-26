@@ -8,6 +8,7 @@ const PROFESSIONS = [
   'Técnico',
   'Analista Tático',
   'Analista Individual',
+  'Analista de Mercado/Scout',
   'Outro',
 ]
 
