@@ -88,10 +88,15 @@ export default function Home() {
     profession: '',
     club: '',
     softwaresUsed: [] as string[],
+    customSoftware: '',
     mainDifficulties: [] as string[],
+    customDifficulty: '',
     favoriteTools: [] as string[],
+    customTool: '',
     essentialFeatures: [] as string[],
+    customFeature: '',
     gaps: [] as string[],
+    customGap: '',
     additionalFeedback: '',
   })
 
@@ -129,10 +134,15 @@ export default function Home() {
           profession: '',
           club: '',
           softwaresUsed: [],
+          customSoftware: '',
           mainDifficulties: [],
+          customDifficulty: '',
           favoriteTools: [],
+          customTool: '',
           essentialFeatures: [],
+          customFeature: '',
           gaps: [],
+          customGap: '',
           additionalFeedback: '',
         })
         setStep(1)
