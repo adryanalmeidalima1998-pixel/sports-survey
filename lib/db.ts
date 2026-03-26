@@ -75,14 +75,28 @@ export async function getAllResponses() {
       SELECT * FROM survey_responses
       ORDER BY created_at DESC
     `
-    return result.rows.map((row: any) => ({
-      ...row,
-      softwaresUsed: JSON.parse(row.softwares_used),
-      mainDifficulties: JSON.parse(row.main_difficulties),
-      favoriteTools: JSON.parse(row.favorite_tools),
-      essentialFeatures: JSON.parse(row.essential_features),
-      gaps: JSON.parse(row.gaps),
-    }))
+    return result.rows.map((row: any) => {
+    try {
+      return {
+        ...row,
+        softwaresUsed: JSON.parse(row.softwares_used),
+        mainDifficulties: JSON.parse(row.main_difficulties),
+        favoriteTools: JSON.parse(row.favorite_tools),
+        essentialFeatures: JSON.parse(row.essential_features),
+        gaps: JSON.parse(row.gaps),
+      }
+    } catch (e) {
+      console.error('Error parsing JSON for row:', row.id, e)
+      return {
+        ...row,
+        softwaresUsed: [],
+        mainDifficulties: [],
+        favoriteTools: [],
+        essentialFeatures: [],
+        gaps: [],
+      }
+    }
+  })
   } catch (error) {
     console.error('Error fetching responses:', error)
     return []

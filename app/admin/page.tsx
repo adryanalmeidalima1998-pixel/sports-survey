@@ -163,9 +163,9 @@ export default function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {responses.map((response, idx) => (
+                  {responses.map((response) => (
                     <tr
-                      key={idx}
+                      key={response.id}
                       className="border-b border-slate-700/50 hover:bg-slate-700/30 transition"
                     >
                       <td className="px-4 py-3 text-slate-200">{response.name}</td>
