@@ -7,6 +7,7 @@ export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false)
   const [responses, setResponses] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
+  const [selectedResponse, setSelectedResponse] = useState<any>(null)
 
   const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123'
 
@@ -160,6 +161,7 @@ export default function AdminPage() {
                     <th className="px-4 py-3 text-left font-semibold text-slate-300">Profissão</th>
                     <th className="px-4 py-3 text-left font-semibold text-slate-300">Softwares</th>
                     <th className="px-4 py-3 text-left font-semibold text-slate-300">Data</th>
+                    <th className="px-4 py-3 text-left font-semibold text-slate-300">Ação</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -179,6 +181,14 @@ export default function AdminPage() {
                       <td className="px-4 py-3 text-slate-400">
                         {new Date(response.created_at).toLocaleDateString('pt-BR')}
                       </td>
+                      <td className="px-4 py-3">
+                        <button
+                          onClick={() => setSelectedResponse(response)}
+                          className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded transition"
+                        >
+                          Ver Detalhes
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -187,6 +197,191 @@ export default function AdminPage() {
           </div>
         )}
       </div>
+
+      {/* Modal de Detalhes */}
+      {selectedResponse && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-slate-800 border border-slate-700 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-slate-800 border-b border-slate-700 p-6 flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-white">Detalhes da Resposta</h2>
+              <button
+                onClick={() => setSelectedResponse(null)}
+                className="text-slate-400 hover:text-white text-2xl"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Informações Pessoais */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">Informações Pessoais</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-700/30 p-4 rounded">
+                  <div>
+                    <p className="text-slate-400 text-sm">Nome</p>
+                    <p className="text-white font-medium">{selectedResponse.name}</p>
+                  </div>
+                  <div>
+                    <p className="text-slate-400 text-sm">Email</p>
+                    <p className="text-white font-medium">{selectedResponse.email}</p>
+                  </div>
+                  <div>
+                    <p className="text-slate-400 text-sm">Profissão</p>
+                    <p className="text-white font-medium">{selectedResponse.profession}</p>
+                  </div>
+                  <div>
+                    <p className="text-slate-400 text-sm">Clube/Equipe</p>
+                    <p className="text-white font-medium">{selectedResponse.club || 'Não informado'}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Softwares Utilizados */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">Softwares Utilizados</h3>
+                <div className="bg-slate-700/30 p-4 rounded space-y-2">
+                  {selectedResponse.softwaresUsed.length > 0 ? (
+                    <>
+                      {selectedResponse.softwaresUsed.map((software: string) => (
+                        <div key={software} className="flex items-center space-x-2">
+                          <span className="text-blue-400">•</span>
+                          <span className="text-slate-200">{software}</span>
+                        </div>
+                      ))}
+                      {selectedResponse.customSoftware && (
+                        <div className="mt-3 pt-3 border-t border-slate-600">
+                          <p className="text-slate-400 text-sm mb-1">Outro software:</p>
+                          <p className="text-slate-200">{selectedResponse.customSoftware}</p>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-slate-400">Nenhum software selecionado</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Dificuldades */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">Maiores Dificuldades</h3>
+                <div className="bg-slate-700/30 p-4 rounded space-y-2">
+                  {selectedResponse.mainDifficulties.length > 0 ? (
+                    <>
+                      {selectedResponse.mainDifficulties.map((difficulty: string) => (
+                        <div key={difficulty} className="flex items-center space-x-2">
+                          <span className="text-red-400">•</span>
+                          <span className="text-slate-200">{difficulty}</span>
+                        </div>
+                      ))}
+                      {selectedResponse.customDifficulty && (
+                        <div className="mt-3 pt-3 border-t border-slate-600">
+                          <p className="text-slate-400 text-sm mb-1">Outra dificuldade:</p>
+                          <p className="text-slate-200">{selectedResponse.customDifficulty}</p>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-slate-400">Nenhuma dificuldade selecionada</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Ferramentas Favoritas */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">Ferramentas Favoritas</h3>
+                <div className="bg-slate-700/30 p-4 rounded space-y-2">
+                  {selectedResponse.favoriteTools.length > 0 ? (
+                    <>
+                      {selectedResponse.favoriteTools.map((tool: string) => (
+                        <div key={tool} className="flex items-center space-x-2">
+                          <span className="text-yellow-400">•</span>
+                          <span className="text-slate-200">{tool}</span>
+                        </div>
+                      ))}
+                      {selectedResponse.customTool && (
+                        <div className="mt-3 pt-3 border-t border-slate-600">
+                          <p className="text-slate-400 text-sm mb-1">Outra ferramenta:</p>
+                          <p className="text-slate-200">{selectedResponse.customTool}</p>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-slate-400">Nenhuma ferramenta selecionada</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Funcionalidades Essenciais */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">O que Não Pode Faltar</h3>
+                <div className="bg-slate-700/30 p-4 rounded space-y-2">
+                  {selectedResponse.essentialFeatures.length > 0 ? (
+                    <>
+                      {selectedResponse.essentialFeatures.map((feature: string) => (
+                        <div key={feature} className="flex items-center space-x-2">
+                          <span className="text-green-400">•</span>
+                          <span className="text-slate-200">{feature}</span>
+                        </div>
+                      ))}
+                      {selectedResponse.customFeature && (
+                        <div className="mt-3 pt-3 border-t border-slate-600">
+                          <p className="text-slate-400 text-sm mb-1">Outra funcionalidade:</p>
+                          <p className="text-slate-200">{selectedResponse.customFeature}</p>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-slate-400">Nenhuma funcionalidade selecionada</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Lacunas do Mercado */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">Aonde Deixam a Desejar</h3>
+                <div className="bg-slate-700/30 p-4 rounded space-y-2">
+                  {selectedResponse.gaps.length > 0 ? (
+                    <>
+                      {selectedResponse.gaps.map((gap: string) => (
+                        <div key={gap} className="flex items-center space-x-2">
+                          <span className="text-purple-400">•</span>
+                          <span className="text-slate-200">{gap}</span>
+                        </div>
+                      ))}
+                      {selectedResponse.customGap && (
+                        <div className="mt-3 pt-3 border-t border-slate-600">
+                          <p className="text-slate-400 text-sm mb-1">Outra lacuna:</p>
+                          <p className="text-slate-200">{selectedResponse.customGap}</p>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-slate-400">Nenhuma lacuna selecionada</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Feedback Adicional */}
+              {selectedResponse.additionalFeedback && (
+                <div>
+                  <h3 className="text-lg font-semibold text-white mb-3">Feedback Adicional</h3>
+                  <div className="bg-slate-700/30 p-4 rounded">
+                    <p className="text-slate-200 whitespace-pre-wrap">{selectedResponse.additionalFeedback}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Data */}
+              <div className="border-t border-slate-700 pt-4">
+                <p className="text-slate-400 text-sm">Data de Envio</p>
+                <p className="text-white font-medium">
+                  {new Date(selectedResponse.created_at).toLocaleString('pt-BR')}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
