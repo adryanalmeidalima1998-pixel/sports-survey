@@ -26,7 +26,6 @@ const SOFTWARES = [
   'TacticalPad',
   'SofaScore/WhoScored',
   'VideFlow',
-  'Outro',
 ]
 
 const DIFFICULTIES = [
@@ -38,7 +37,6 @@ const DIFFICULTIES = [
   'Lentidão na análise',
   'Limitações em relatórios',
   'Falta de análise em tempo real',
-  'Outro',
 ]
 
 const TOOLS = [
@@ -50,7 +48,6 @@ const TOOLS = [
   'Rastreamento de jogadores',
   'Mapas de calor',
   'Estatísticas detalhadas',
-  'Outro',
 ]
 
 const FEATURES = [
@@ -75,7 +72,6 @@ const GAPS = [
   'Sem suporte a múltiplos idiomas',
   'Limitações em análise de vídeo',
   'Falta de análise comparativa',
-  'Outro',
 ]
 
 export default function Home() {
@@ -163,7 +159,7 @@ export default function Home() {
           <p className="text-slate-300 mb-6">Sua resposta foi registrada com sucesso. Seus insights são valiosos para nós!</p>
           <button
             onClick={() => setSubmitted(false)}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition"
           >
             Enviar Outra Resposta
           </button>
@@ -175,7 +171,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-8 px-4">
       <div className="max-w-2xl mx-auto">
-        {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex justify-between mb-2">
             <h1 className="text-2xl font-bold text-white">Pesquisa de Softwares</h1>
@@ -190,7 +185,6 @@ export default function Home() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Step 1: Informações Pessoais */}
           {step === 1 && (
             <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 backdrop-blur-sm">
               <h2 className="text-xl font-semibold mb-4 text-white">Informações Pessoais</h2>
@@ -247,11 +241,10 @@ export default function Home() {
             </div>
           )}
 
-          {/* Step 2: Softwares */}
           {step === 2 && (
             <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 backdrop-blur-sm">
               <h2 className="text-xl font-semibold mb-4 text-white">Quais softwares você utiliza? *</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                 {SOFTWARES.map((software) => (
                   <label key={software} className="flex items-center space-x-3 p-2 hover:bg-slate-700/30 rounded cursor-pointer">
                     <input
@@ -264,14 +257,23 @@ export default function Home() {
                   </label>
                 ))}
               </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Outro software (opcional):</label>
+                <input
+                  type="text"
+                  value={formData.customSoftware}
+                  onChange={(e) => setFormData({ ...formData, customSoftware: e.target.value })}
+                  className="w-full bg-slate-700/50 border border-slate-600 rounded px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                  placeholder="Digite o nome do software..."
+                />
+              </div>
             </div>
           )}
 
-          {/* Step 3: Dificuldades */}
           {step === 3 && (
             <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 backdrop-blur-sm">
               <h2 className="text-xl font-semibold mb-4 text-white">Quais são as maiores dificuldades?</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                 {DIFFICULTIES.map((difficulty) => (
                   <label key={difficulty} className="flex items-center space-x-3 p-2 hover:bg-slate-700/30 rounded cursor-pointer">
                     <input
@@ -284,14 +286,23 @@ export default function Home() {
                   </label>
                 ))}
               </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Outra dificuldade (opcional):</label>
+                <input
+                  type="text"
+                  value={formData.customDifficulty}
+                  onChange={(e) => setFormData({ ...formData, customDifficulty: e.target.value })}
+                  className="w-full bg-slate-700/50 border border-slate-600 rounded px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                  placeholder="Digite outra dificuldade..."
+                />
+              </div>
             </div>
           )}
 
-          {/* Step 4: Ferramentas Favoritas */}
           {step === 4 && (
             <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 backdrop-blur-sm">
               <h2 className="text-xl font-semibold mb-4 text-white">Quais ferramentas você mais gosta de usar?</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                 {TOOLS.map((tool) => (
                   <label key={tool} className="flex items-center space-x-3 p-2 hover:bg-slate-700/30 rounded cursor-pointer">
                     <input
@@ -304,14 +315,23 @@ export default function Home() {
                   </label>
                 ))}
               </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Outra ferramenta (opcional):</label>
+                <input
+                  type="text"
+                  value={formData.customTool}
+                  onChange={(e) => setFormData({ ...formData, customTool: e.target.value })}
+                  className="w-full bg-slate-700/50 border border-slate-600 rounded px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                  placeholder="Digite outra ferramenta..."
+                />
+              </div>
             </div>
           )}
 
-          {/* Step 5: Funcionalidades Essenciais */}
           {step === 5 && (
             <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 backdrop-blur-sm">
               <h2 className="text-xl font-semibold mb-4 text-white">O que não pode faltar de jeito nenhum?</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                 {FEATURES.map((feature) => (
                   <label key={feature} className="flex items-center space-x-3 p-2 hover:bg-slate-700/30 rounded cursor-pointer">
                     <input
@@ -324,15 +344,24 @@ export default function Home() {
                   </label>
                 ))}
               </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Outra funcionalidade (opcional):</label>
+                <input
+                  type="text"
+                  value={formData.customFeature}
+                  onChange={(e) => setFormData({ ...formData, customFeature: e.target.value })}
+                  className="w-full bg-slate-700/50 border border-slate-600 rounded px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                  placeholder="Digite outra funcionalidade..."
+                />
+              </div>
             </div>
           )}
 
-          {/* Step 6: Lacunas e Feedback */}
           {step === 6 && (
             <div className="space-y-6">
               <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 backdrop-blur-sm">
                 <h2 className="text-xl font-semibold mb-4 text-white">Aonde esses softwares deixam a desejar?</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                   {GAPS.map((gap) => (
                     <label key={gap} className="flex items-center space-x-3 p-2 hover:bg-slate-700/30 rounded cursor-pointer">
                       <input
@@ -344,6 +373,16 @@ export default function Home() {
                       <span className="text-slate-300">{gap}</span>
                     </label>
                   ))}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Outra lacuna (opcional):</label>
+                  <input
+                    type="text"
+                    value={formData.customGap}
+                    onChange={(e) => setFormData({ ...formData, customGap: e.target.value })}
+                    className="w-full bg-slate-700/50 border border-slate-600 rounded px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                    placeholder="Digite outra lacuna..."
+                  />
                 </div>
               </div>
 
@@ -359,7 +398,6 @@ export default function Home() {
             </div>
           )}
 
-          {/* Navigation */}
           <div className="flex justify-between gap-4">
             <button
               type="button"
