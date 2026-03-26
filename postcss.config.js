@@ -1,1 +1,6 @@
-// PostCSS config removed - using CSS utilities instead
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}

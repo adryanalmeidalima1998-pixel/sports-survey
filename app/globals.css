@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -13,17 +17,4 @@ body {
   color: #e2e8f0;
   font-family: system-ui, -apple-system, sans-serif;
   min-height: 100vh;
-}
-
-input, select, textarea, button {
-  font-family: inherit;
-}
-
-input:focus, select:focus, textarea:focus {
-  outline: none;
-}
-
-button {
-  cursor: pointer;
-  border: none;
 }
